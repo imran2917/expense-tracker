@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Sign In - Expense Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="card">
+            <div class="header">
+                <h2 id="formTitle">Welcome Back</h2>
+                <p id="formSubtitle">Please enter your details to sign in.</p>
+            </div>
+
+            <form id="authForm">
+                <!-- Name field (Signup ke waqt show hoga) -->
+                <div class="input-group hidden" id="nameGroup">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe">
+                </div>
+
+                <!-- Username field (Signup ke waqt show hoga) -->
+                <div class="input-group hidden" id="usernameGroup">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="johndoe">
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-primary">Sign In</button>
+            </form>
+
+            <div id="message" class="message"></div>
+
+            <!-- Switch between Login and Signup -->
+            <div class="switch-auth">
+                <p id="switchText">Don't have an account? <a href="#" id="toggleLink">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
