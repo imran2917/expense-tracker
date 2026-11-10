@@ -1,55 +1,179 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Sign In - Expense Tracker</title>
+
+    <title>Expense Tracker | Welcome</title>
+
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <div class="auth-container">
-        <div class="card">
-            <div class="header">
-                <h2 id="formTitle">Welcome Back</h2>
-                <p id="formSubtitle">Please enter your details to sign in.</p>
+
+        <!-- Left Side -->
+        <div class="auth-info">
+
+            <h1>Expense Tracker</h1>
+
+            <h2>Take control of your money.</h2>
+
+            <p>
+                Track your expenses, manage your spending,
+                and understand where your money goes.
+            </p>
+
+            <div class="info-footer">
+                Manage your money smarter.
             </div>
 
-            <form id="authForm">
-                <!-- Name field (Signup ke waqt show hoga) -->
-                <div class="input-group hidden" id="nameGroup">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" placeholder="John Doe">
-                </div>
-
-                <!-- Username field (Signup ke waqt show hoga) -->
-                <div class="input-group hidden" id="usernameGroup">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="johndoe">
-                </div>
-
-                <div class="input-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="name@example.com" required>
-                </div>
-
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
-                </div>
-
-                <button type="submit" id="submitBtn" class="btn-primary">Sign In</button>
-            </form>
-
-            <div id="message" class="message"></div>
-
-            <!-- Switch between Login and Signup -->
-            <div class="switch-auth">
-                <p id="switchText">Don't have an account? <a href="#" id="toggleLink">Sign Up</a></p>
-            </div>
         </div>
+
+
+        <!-- Right Side -->
+        <div class="auth-form-container">
+
+            <div class="auth-form">
+
+                <h2 id="form-title">Welcome Back</h2>
+
+                <p id="form-description">
+                    Please enter your details to login.
+                </p>
+
+
+                <!-- Login Form -->
+                <form id="login-form">
+
+                    <div class="form-group">
+
+                        <label for="login-email">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="login-email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="login-password">Password</label>
+
+                        <input
+                            type="password"
+                            id="login-password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button type="submit" class="auth-button">
+                        Login
+                    </button>
+
+                </form>
+
+
+                <!-- Registration Form -->
+                <form id="signup-form" class="hidden">
+
+                    <div class="form-group">
+
+                        <label for="signup-name">Full Name</label>
+
+                        <input
+                            type="text"
+                            id="signup-name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="signup-username">Username</label>
+
+                        <input
+                            type="text"
+                            id="signup-username"
+                            placeholder="Choose a username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="signup-email">Email Address</label>
+
+                        <input
+                            type="email"
+                            id="signup-email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="signup-password">Password</label>
+
+                        <input
+                            type="password"
+                            id="signup-password"
+                            placeholder="Minimum 8 characters"
+                            minlength="8"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button type="submit" class="auth-button">
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <p class="switch-text">
+
+                    <span id="switch-description">
+                        Don't have an account?
+                    </span>
+
+                    <button type="button" id="switch-button">
+                        Sign Up
+                    </button>
+
+                </p>
+
+                <p id="message"></p>
+
+            </div>
+
+        </div>
+
     </div>
 
     <script src="js/auth.js"></script>
+    <script src="js/signup.js"></script>
+
 </body>
+
 </html>

@@ -21,8 +21,8 @@ class UserCreateDto(BaseModel):
     username : str = Field(..., min_length = 3, max_length = 50 )
 
 class UserLoginDto(BaseModel):
-    email : EmailStr = Field(" Enter the Registered Email")
-    password : str = Field("Enter the Register Password ")
+    email : EmailStr = Field(..., description = " Enter the Registered Email")
+    password : str = Field(..., description = "Enter the Register Password ")
 
 class UserResponseDto(BaseModel):
     id : int

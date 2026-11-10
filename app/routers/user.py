@@ -83,7 +83,7 @@ def login_user(login_request : UserLoginDto, db : Session = Depends(get_db)):
         )
 
     # check the password valid or not
-    is_password_valid = verify_password(user_model.hashed_password, login_request.password)
+    is_password_valid = verify_password(login_request.password, user_model.hashed_password)
 
     if not is_password_valid:
         raise HTTPException(

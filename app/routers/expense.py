@@ -11,6 +11,8 @@ from core.db import get_db
 from models.expense import Expense
 from schemas.expense import ExpenseRequestDto, ExpenseResponseDto
 from schemas.api_response import ApiResponse
+from models.user import User
+from core.dependencies import get_current_user
 
 expense_router = APIRouter(
     prefix="/expenses",
@@ -22,12 +24,14 @@ expense_router = APIRouter(
 @expense_router.post("/", response_model=ApiResponse)
 def create_expense(
     expense_request_dto: ExpenseRequestDto,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user : User = Depends(get_current_user)
 ):
     new_expense = Expense(
         title=expense_request_dto.title,
         description=expense_request_dto.description,
-        amount=expense_request_dto.amount
+        amount=expense_request_dto.amount,
+        user_id = current_user.id
     )
 
     db.add(new_expense)
@@ -46,10 +50,16 @@ def create_expense(
 
 # GET ALL EXPENSES
 @expense_router.get("/", response_model=ApiResponse)
-def get_all_expenses(db: Session = Depends(get_db)):
+def get_all_expenses(
+    db: Session = Depends(get_db),
+    current_user : User = Depends(get_current_user)
+    ):
 
-    db_expenses = db.query(Expense).all()
+    db_expenses = (
+        db.query(Expense).filter(Expense.user_id == current_user.id).all()
+    )
     expense_list = []
+
 
     for exp in db_expenses:
         validated_items = ExpenseResponseDto.model_validate(exp).model_dump()
@@ -68,10 +78,13 @@ def get_all_expenses(db: Session = Depends(get_db)):
 @expense_router.get("/{expense_id}", response_model=ApiResponse)
 def get_expense_by_id(
     expense_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user : User = Depends(get_current_user)
+
 ):
     expense = db.query(Expense).filter(
-        Expense.id == expense_id
+        Expense.id == expense_id,
+        Expense.user_id == current_user.id
     ).first()
 
     if expense is None:
@@ -95,10 +108,12 @@ def get_expense_by_id(
 def update_expense(
     expense_id : int,
     expense_request_dto : ExpenseRequestDto,
-    db : Session = Depends(get_db)
+    db : Session = Depends(get_db),
+    current_user : User = Depends(get_db)
 ):
     expense = db.query(Expense).filter(
-        Expense.id == expense_id
+        Expense.id == expense_id,
+        Expense.user_id == current_user.id
     ).first()
 
     if not expense:
@@ -131,11 +146,13 @@ def update_expense(
 @expense_router.delete("/{expense_id}", response_model=ApiResponse)
 def delete_expense(
     expense_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user : User = Depends(get_db)
 ):
 
     expense = db.query(Expense).filter(
-        Expense.id == expense_id
+        Expense.id == expense_id,
+        Expense.user_id == current_user.id
     ).first()
 
     if not expense:

@@ -1,37 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("loginForm");
-    if (!loginForm) return;
 
-    loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+// Get HTML elements
+(function () {
 
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value.trim();
-        const messageEl = document.getElementById("message");
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("signup-form");
 
-        try {
-            messageEl.style.color = "#007bff";
-            messageEl.innerText = "Authenticating...";
+const formTitle = document.getElementById("form-title");
+const formDescription = document.getElementById("form-description");
 
-            // Clean & Professional call using ApiClient
-            const response = await api.post("/user/login", { email, password });
+const switchButton = document.getElementById("switch-button");
+const switchDescription = document.getElementById("switch-description");
 
-            messageEl.style.color = "#28a745";
-            messageEl.innerText = response.message || "Login Successful!";
 
-            // Save user profile data temporarily if returned
-            if (response.data && response.data.user) {
-                localStorage.setItem("user", JSON.stringify(response.data.user));
-            }
+// Switch between Login and Signup
 
-            // Redirect smoothly to dashboard
-            setTimeout(() => {
-                window.location.href = "dashboard.html";
-            }, 700);
+switchButton.addEventListener("click", function () {
 
-        } catch (error) {
-            messageEl.style.color = "#dc3545";
-            messageEl.innerText = error.message;
-        }
-    });
+    if (loginForm.classList.contains("hidden")) {
+
+        // Show Login Form
+
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+
+        formTitle.textContent = "Welcome Back";
+        formDescription.textContent = "Please enter your details to login.";
+
+        switchDescription.textContent = "Don't have an account?";
+        switchButton.textContent = "Sign Up";
+
+    } else {
+
+        // Show Signup Form
+
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+
+        formTitle.textContent = "Create Account";
+        formDescription.textContent = "Enter your details to create an account.";
+
+        switchDescription.textContent = "Already have an account?";
+        switchButton.textContent = "Login";
+
+    }
+
 });
+
+
+})();
