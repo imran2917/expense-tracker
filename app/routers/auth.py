@@ -46,9 +46,8 @@ def login_user(login_request: LoginRequest, db: Session = Depends(get_db)):
     
     try:
         is_valid = verify_password(login_request.password, user.hashed_password)
-        print(f"✅ Passwords Match Result: {is_valid}")
     except Exception as e:
-        print(f"❌ Verify Password Error: {str(e)}")
+        print(f" Verify Password Error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Hashing error: {str(e)}")
         
     if not is_valid:

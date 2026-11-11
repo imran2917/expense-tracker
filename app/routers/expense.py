@@ -8,10 +8,16 @@ from sqlalchemy.orm import Session
 # from models.expense import Expense
 
 from core.db import get_db
+
+#import the Expense Class and User class from model folder and expnese and user file -> There are the Database Design a skelton of database
 from models.expense import Expense
+from models.user import User
+
+#from scheme where the Pydantic Validation of the Expense and User is defined 
 from schemas.expense import ExpenseRequestDto, ExpenseResponseDto
 from schemas.api_response import ApiResponse
-from models.user import User
+
+# Depdenciy is use for token verification
 from core.dependencies import get_current_user
 
 expense_router = APIRouter(
