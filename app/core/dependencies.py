@@ -7,7 +7,7 @@ from core.jwt_helper import verify_token_access
 from models.user import User
 
 
-# To receive Beares  :Token Receive krna k liye
+# To receive Beares  : Token Receive krna k liye
 
 security = HTTPBearer(auto_error = False)
 
@@ -21,8 +21,8 @@ def get_current_user(
     if credentials is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            details = "User Not Found",
-            headers = {"WW-Authenticate " : "Beared"}
+            detail = "User Not Found",
+            headers = {"WWW-Authenticate " : "Beared"}
         )
 
     token = credentials.credentials
@@ -39,7 +39,7 @@ def get_current_user(
     if not isinstance(user_id , int) or isinstance(user_id, bool):
         raise HTTPException(
             status_code = status.HTTP_401_UNAUTHORIZED,
-            details = "Invalid Payload Token"
+            detail = "Invalid Payload Token"
         )
 
     # find the user from the database 
@@ -48,7 +48,7 @@ def get_current_user(
     if current_user is None:
         raise HTTPException(
             status_code = status.HTTP_401_UNAUTHORIZED,
-            details = "User not found"
+            detail = "User not found"
         )
 
     return current_user

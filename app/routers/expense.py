@@ -115,7 +115,7 @@ def update_expense(
     expense_id : int,
     expense_request_dto : ExpenseRequestDto,
     db : Session = Depends(get_db),
-    current_user : User = Depends(get_db)
+    current_user : User = Depends(get_current_user)
 ):
     expense = db.query(Expense).filter(
         Expense.id == expense_id,
@@ -153,7 +153,7 @@ def update_expense(
 def delete_expense(
     expense_id: int,
     db: Session = Depends(get_db),
-    current_user : User = Depends(get_db)
+    current_user : User = Depends(get_current_user)
 ):
 
     expense = db.query(Expense).filter(

@@ -18,7 +18,7 @@ class Expense(BASE):
 
     title = Column(String(50), nullable=False)
 
-    description = Column(String(500), nullable=True)
+    description = Column(String(500), nullable=False)
 
     show = Column(Boolean, default=True)
 
