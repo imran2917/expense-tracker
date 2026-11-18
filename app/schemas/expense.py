@@ -37,3 +37,4 @@ class ExpenseResponseDto(BaseModel):
     description: str
     show: bool
     created_at: datetime | None = None
+    updated_at: datetime | None = None

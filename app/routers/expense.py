@@ -1,6 +1,7 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from datetime import datetime, timezone
 
 # from schemas.expense import ExpenseRequestDto, ExpenseResponseDto
 # from schemas.api_response import ApiResponse
@@ -38,6 +39,7 @@ def create_expense(
         description=expense_request_dto.description,
         amount=expense_request_dto.amount,
         user_id = current_user.id
+
     )
 
     db.add(new_expense)
@@ -132,6 +134,7 @@ def update_expense(
     expense.amount = expense_request_dto.amount
     expense.description = expense_request_dto.description
     expense.show = expense_request_dto.show
+    expense.updated_at = datetime.now(timezone.utc)
 
     # update int he bd
     db.commit()

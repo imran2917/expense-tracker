@@ -29,6 +29,11 @@ class Expense(BASE):
         nullable=False,
         default=lambda: datetime.now(timezone.utc)
     )
+    updated_at = Column(
+        DateTime(timezone = True),
+        nullable = True,
+        default = None
+    )
     user_id = Column(
         Integer,
         ForeignKey("users.id"),
