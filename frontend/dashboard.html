@@ -17,7 +17,7 @@
             <h2 class="logo">Expense<span>Tracker</span></h2>
 
             <nav class="sidebar-nav">
-                <a href="#" class="active">Dashboard</a>
+                <a href="dashboard.html" class="active">Dashboard</a>
                 <a href="#">Expenses</a>
                 <a href="#">Reports</a>
                 <a href="#">Settings</a>
@@ -93,6 +93,7 @@
                                 <th>Description</th>
                                 <th>Amount</th>
                                 <th>Date</th>
+                                <th>Last Update</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -112,8 +113,6 @@
         </main>
 
     </div>
-    # Add the ExpenseAdd Modal
-
 <!-- Add Expense Modal -->
 <div id="addExpenseModal" class="modal">
 
@@ -154,8 +153,8 @@
                     type="number"
                     id="expenseAmount"
                     placeholder="Enter amount"
-                    min="0.01"
-                    step="0.01"
+                    min="0"
+                    step="1"
                     required
                 >
             </div>
@@ -183,11 +182,75 @@
 
 </div>
 
+<!-- Edit Expense Modal -->
+<div id="editExpenseModal" class="modal">
 
+    <div class="modal-content">
 
-    <script src="js/dashboard.js"></script>
-    <script src="js/expenses.js"></script>
-    
+        <h2>Edit Expense</h2>
 
+        <form id="editExpenseForm">
+
+            <!-- Expense Title -->
+            <div class="form-group">
+                <label for="editExpenseTitle">Expense Title</label>
+
+                <input
+                    type="text"
+                    id="editExpenseTitle"
+                    placeholder="Enter expense title"
+                    required
+                >
+            </div>
+
+            <!-- Expense Description -->
+            <div class="form-group">
+                <label for="editExpenseDescription">Description</label>
+
+                <textarea
+                    id="editExpenseDescription"
+                    placeholder="Enter expense description"
+                    required
+                ></textarea>
+            </div>
+
+            <!-- Expense Amount -->
+            <div class="form-group">
+                <label for="editExpenseAmount">Amount (Rs.)</label>
+
+                <input
+                    type="number"
+                    id="editExpenseAmount"
+                    placeholder="Enter expense amount"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+            </div>
+
+            <!-- Buttons -->
+            <div class="modal-buttons">
+
+                <button type="submit" class="btn-primary">
+                    Update Expense
+                </button>
+
+                <button
+                    type="button"
+                    id="closeEditModal"
+                    class="btn-secondary"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<script src="js/dashboard.js"></script>
+<script src="js/expenses.js"></script>
 </body>
 </html>

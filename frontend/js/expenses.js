@@ -1,5 +1,78 @@
 
 console.log("Expenses JavaScript is loaded!");
+let selectedExpenseId = null;
+const editExpenseModal = document.getElementById("editExpenseModal");
+const closeEditModal = document.getElementById("closeEditModal");
+
+closeEditModal.addEventListener("click", function(){
+    editExpenseModal.style.display  = "none";
+})
+
+// get the edit expense form data 
+const editExpenseForm = document.getElementById("editExpenseForm");
+
+// Handle From Submissin
+editExpenseForm.addEventListener("submit", async function(event){
+    //stop the page from the refreshing
+    event.preventDefault();
+
+    // make sure expense is selected
+    if(selectedExpenseId === null){
+        alert("No Expense is  selected for editing");
+        return;
+    }
+
+    // collect updated form data
+    const title = document.getElementById("editExpenseTitle").value;
+    const description = document.getElementById("editExpenseDescription").value;
+    const amount = document.getElementById("editExpenseAmount").value;
+
+    // get loging token
+    const token = localStorage.getItem("access_token");
+
+    // send update data to fastAPI bakcend router
+    try{
+        const response = await fetch(
+            `http://127.0.0.1:8000/expenses/${selectedExpenseId}`,
+            {
+                method : "PUT",
+                headers : {
+                    "Content-Type" : "application/json",
+                    "Authorization" : `Bearer ${token}`
+                },
+
+                body : JSON.stringify({
+                    title : title,
+                    description : description,
+                    amount : Number(amount),
+                    show : true
+                })
+            }
+            
+        );
+        const result = await response.json();
+        // check response 
+
+        if(!response.ok || result.status !== "Success"){
+            alert("Error: " + (result.message || "Unable to update expense" ));
+            return;
+        }
+           alert("Expense updated successfully!");
+        // reset the form 
+        editExpenseForm.reset();
+        // close the modal
+        editExpenseModal.style.display = "none";
+        // reload the expense
+        await loadExpenses();
+        selectedExpenseId = null;
+    }
+    catch(error){
+        console.log("Error:", error);
+        alert("Unable to connect to the backend.");
+    }
+ 
+});
+
 
 // Get the Add Expense Form
 const addExpenseForm = document.getElementById("addExpenseForm");
@@ -56,6 +129,7 @@ addExpenseForm.addEventListener("submit", async function (event) {
 
         // Close modal
         addExpenseModal.style.display = "none";
+        await loadExpenses();
 
     } catch (error) {
 
@@ -107,7 +181,7 @@ async function loadExpenses() {
         if (expenses.length === 0) {
             expenseTableBody.innerHTML = `
                 <tr>
-                    <td colspan="5" class="empty-message">
+                    <td colspan="6" class="empty-message">
                         No expenses found.
                     </td>
                 </tr>
@@ -131,13 +205,84 @@ async function loadExpenses() {
             const dateCell = document.createElement("td");
             dateCell.textContent = new Date(expense.created_at).toLocaleDateString();
 
+            const updatedAtCell = document.createElement("td");
+            updatedAtCell.textContent = expense.updated_at
+                ? new Date(expense.updated_at).toLocaleDateString()
+                : new Date(expense.created_at).toLocaleDateString();
+
+            // const actionCell = document.createElement("td");
+            // actionCell.textContent = "Actions coming soon";
             const actionCell = document.createElement("td");
-            actionCell.textContent = "Actions coming soon";
+
+            // create edit button
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("btn-edit");
+            editButton.dataset.id = expense.id;
+
+            // handle edit button click
+
+            editButton.addEventListener("click", function() {
+                // remember which expeense is being edited
+                selectedExpenseId = expense.id;
+                // fill te form with the existing data
+                document.getElementById("editExpenseTitle").value = expense.title;
+                document.getElementById("editExpenseDescription").value = expense.description;
+                document.getElementById("editExpenseAmount").value = expense.amount;
+
+                // show the expense modal
+                document.getElementById("editExpenseModal").style.display = "flex";
+
+            });
+
+            // create deleate button 
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("btn-delete");
+            deleteButton.dataset.id = expense.id;
+            // add the event listener for delete button
+
+            deleteButton.addEventListener("click", async function(){
+                const confirmed = confirm("Are you sure you want to delete this expense?");
+                if(!confirmed){
+                    return;
+                }
+                const token = localStorage.getItem("access_token");
+                try{
+                    const response = await fetch(
+                        `http://localhost:8000/expenses/${expense.id}`,
+                        {
+                            method : "DELETE",
+                            headers : {
+                                "Authorization" : `Bearer ${token}`
+                            }
+                        }
+                    );
+                    const result = await response.json();
+                    if(!response.ok || result.status !== "Success"){
+                        alert("Error" + (result.message || "Unable to delete expense"));
+                        return;
+                    }
+                    alert("Expense deleted successfully!");
+                    await loadExpenses();
+                }
+                catch (error){
+                    console.log("Error:", error);
+                    alert("Unable to connect to the backend.");
+                }
+            });
+
+            // add button inside action cell
+            actionCell.appendChild(editButton);
+            actionCell.appendChild(deleteButton);
+
 
             row.appendChild(titleCell);
             row.appendChild(descriptionCell);
             row.appendChild(amountCell);
             row.appendChild(dateCell);
+            row.appendChild(updatedAtCell);
             row.appendChild(actionCell);
 
             expenseTableBody.appendChild(row);
