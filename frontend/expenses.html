@@ -94,6 +94,25 @@
                         
                     >
                 </div>
+                <!-- Date Filter -->
+<div class="filter-container">
+
+    <div class="filter-group">
+        <label for="startDate">From Date</label>
+        <input type="date" id="startDate">
+    </div>
+
+    <div class="filter-group">
+        <label for="endDate">To Date</label>
+        <input type="date" id="endDate">
+    </div>
+
+    <button type="button" id="clearFilters" class="btn-secondary">
+        Clear Filters
+    </button>
+
+</div>
+
 
 
                 <!-- Expense Table -->
@@ -105,8 +124,8 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Description</th>
-                                <th>Amount</th>
-                                <th>Date</th>
+                                <th id="sortAmount" style="cursor: pointer">Amount :</th>
+                                <th id="sortDate" style="cursor: pointer">Date</th>
                                 <th>Last Update</th>
                                 <th>Action</th>
                             </tr>

@@ -168,41 +168,72 @@ const searchExpense = document.getElementById("searchExpense");
 // Search Expenses Function
 function searchExpenses() {
 
-    // If the search input does not exist on this page, stop
-    if (!searchExpense) {
-        return;
-    }
+    const searchValue = searchExpense
+        ? searchExpense.value.toLowerCase().trim()
+        : "";
 
-    // Get the text entered by the user
-    const searchValue = searchExpense.value.toLowerCase().trim();
+    const startDate = document.getElementById("startDate")?.value || "";
+    const endDate = document.getElementById("endDate")?.value || "";
 
-    // Get all current expense rows
     const rows = expenseTableBody.querySelectorAll("tr");
 
-    // Check every row
     rows.forEach(function (row) {
 
-        // Skip the empty-state row
         if (row.cells.length < 2) {
             return;
         }
 
-        // Get title and description
         const title = row.cells[0].textContent.toLowerCase();
         const description = row.cells[1].textContent.toLowerCase();
 
-        // Check whether title or description matches
-        const matches =
+        // Search condition
+        const matchesSearch =
             title.includes(searchValue) ||
             description.includes(searchValue);
 
-        // Show or hide the row
+        // Convert expense date to local YYYY-MM-DD
+        const date = new Date(row.dataset.date);
+
+        const expenseDate = [
+            date.getFullYear(),
+            String(date.getMonth() + 1).padStart(2, "0"),
+            String(date.getDate()).padStart(2, "0")
+        ].join("-");
+
+        // Date conditions
+        const matchesStartDate =
+            !startDate || expenseDate >= startDate;
+
+        const matchesEndDate =
+            !endDate || expenseDate <= endDate;
+
+        // Apply all conditions
+        const matches =
+            matchesSearch &&
+            matchesStartDate &&
+            matchesEndDate;
+
         row.style.display = matches ? "" : "none";
 
     });
-
 }
+// Date filter event listeners
+document.getElementById("startDate")?.addEventListener("change", searchExpenses);
 
+document.getElementById("endDate")?.addEventListener("change", searchExpenses);
+
+
+// Clear all filters
+document.getElementById("clearFilters")?.addEventListener("click", function () {
+
+    document.getElementById("startDate").value = "";
+    document.getElementById("endDate").value = "";
+
+    searchExpense.value = "";
+
+    searchExpenses();
+
+});
 
 // Listen for typing in the search input
 if (searchExpense) {
@@ -252,6 +283,9 @@ async function loadExpenses() {
 
         // Get expenses from the response
         const expenses = result.data.expenses;
+        const displayedExpenses = totalExpensesElement
+            ? expenses.slice(0,5)
+            : expenses;
 
         // Clear existing table rows
         expenseTableBody.innerHTML = "";
@@ -271,10 +305,13 @@ async function loadExpenses() {
         else {
 
             // Display each expense in the table
-            expenses.forEach(function (expense) {
+            displayedExpenses.forEach(function (expense) {
 
                 // Create a new table row
                 const row = document.createElement("tr");
+                row.dataset.date = expense.created_at;
+                row.dataset.amount = expense.amount;
+
 
 
                 // Title Column
@@ -486,3 +523,66 @@ async function loadExpenses() {
 
 // Load expenses when the page opens
 loadExpenses();
+// Date filter event listeners
+document.getElementById("startDate")?.addEventListener("change", searchExpenses);
+
+document.getElementById("endDate")?.addEventListener("change", searchExpenses);
+
+
+// Clear all filters
+document.getElementById("clearFilters")?.addEventListener("click", function () {
+
+    document.getElementById("startDate").value = "";
+    document.getElementById("endDate").value = "";
+
+    searchExpense.value = "";
+
+    searchExpenses();
+
+});
+
+// Sorting functionality
+
+let dateAscending = false;
+let amountAscending = false;
+
+document.getElementById("sortDate")?.addEventListener("click", function () {
+
+    dateAscending = !dateAscending;
+
+    const rows = Array.from(expenseTableBody.querySelectorAll("tr"))
+        .filter(row => row.cells.length >= 2);
+
+    rows.sort((a, b) => {
+        const dateA = new Date(a.dataset.date);
+        const dateB = new Date(b.dataset.date);
+
+        return dateAscending ? dateA - dateB : dateB - dateA;
+    });
+
+    rows.forEach(row => expenseTableBody.appendChild(row));
+
+    this.textContent = dateAscending ? "Date ↑" : "Date ↓";
+});
+
+
+document.getElementById("sortAmount")?.addEventListener("click", function () {
+
+    amountAscending = !amountAscending;
+
+    const rows = Array.from(expenseTableBody.querySelectorAll("tr"))
+        .filter(row => row.cells.length >= 2);
+
+    rows.sort((a, b) => {
+        const amountA = Number(a.dataset.amount);
+        const amountB = Number(b.dataset.amount);
+
+        return amountAscending
+            ? amountA - amountB
+            : amountB - amountA;
+    });
+
+    rows.forEach(row => expenseTableBody.appendChild(row));
+
+    this.textContent = amountAscending ? "Amount ↑" : "Amount ↓";
+});
