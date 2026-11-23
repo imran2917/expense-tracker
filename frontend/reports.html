@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Expenses - Expense Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <h2 class="logo">Expense<span>Tracker</span></h2>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="expenses.html">Expenses</a>
+                <a href="reports.html" class="active">Reports</a>
+
+                <a href="#">Settings</a>
+            </nav>
+
+            <button id="logoutBtn" class="btn-danger">
+                Logout
+            </button>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+
+            <!-- Page Header -->
+            <header class="dashboard-header">
+
+                <div>
+                    <h1>All Expenses</h1>
+                    <p>Manage and track all your expense records.</p>
+                </div>
+
+                <button id="addExpenseBtn" class="btn-primary">
+                    + Add Expense
+                </button>
+
+            </header>
+
+
+            <!-- Summary Cards -->
+            <!-- <section class="summary-cards">
+
+                <div class="summary-card">
+                    <p>Total Expenses</p>
+                    <h2 id="totalExpenses">Rs. 0</h2>
+                    <span>All recorded expenses</span>
+                </div>
+
+                <div class="summary-card">
+                    <p>Total Transactions</p>
+                    <h2 id="totalTransactions">0</h2>
+                    <span>Recorded transactions</span>
+                </div>
+
+                <div class="summary-card">
+                    <p>Average Expense</p>
+                    <h2 id="averageExpense">Rs. 0</h2>
+                    <span>Average per transaction</span>
+                </div>
+
+            </section> -->
+
+
+            <!-- Expenses Section -->
+            <section class="expenses-section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Expense Records</h2>
+                        <p>View, edit, and delete your expenses.</p>
+                    </div>
+
+                </div>
+                <div class = "search-container">
+                    <input
+                        type="test"
+                        id = "searchExpense"
+                        placeholder="Search by title or description"
+                        
+                    >
+                </div>
+                <!-- Date Filter -->
+<div class="filter-container">
+
+    <div class="filter-group">
+        <label for="startDate">From Date</label>
+        <input type="date" id="startDate">
+    </div>
+
+    <div class="filter-group">
+        <label for="endDate">To Date</label>
+        <input type="date" id="endDate">
+    </div>
+
+    <button type="button" id="clearFilters" class="btn-secondary">
+        Clear Filters
+    </button>
+    <button type="button" id="generateReport" id ="btn-secondary"> Generate Report</button>
+
+</div>
+<!-- <button type="button" id="generateReport", class = "btn-secondary">Generate Report</button> -->
+
+
+
+                <!-- Expense Table -->
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th id="sortAmount" style="cursor: pointer">Amount :</th>
+                                <th id="sortDate" style="cursor: pointer">Date</th>
+                                <th>Last Update</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="expenseTableBody">
+                            <tr>
+                                <td colspan="6" class="empty-message">
+                                    No expenses found.
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- Add Expense Modal -->
+    <div id="addExpenseModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Add New Expense</h2>
+
+            <form id="addExpenseForm">
+
+                <div class="form-group">
+                    <label for="expenseTitle">Expense Title</label>
+
+                    <input
+                        type="text"
+                        id="expenseTitle"
+                        placeholder="Enter expense title"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="expenseDescription">Description</label>
+
+                    <textarea
+                        id="expenseDescription"
+                        placeholder="Enter expense description"
+                        required
+                    ></textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="expenseAmount">Amount (Rs.)</label>
+
+                    <input
+                        type="number"
+                        id="expenseAmount"
+                        placeholder="Enter amount"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+                </div>
+
+
+                <div class="modal-buttons">
+
+                    <button type="submit" class="btn-primary">
+                        Save Expense
+                    </button>
+
+                    <button
+                        type="button"
+                        id="closeAddModal"
+                        class="btn-secondary"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- Edit Expense Modal -->
+    <div id="editExpenseModal" class="modal">
+
+        <div class="modal-content">
+
+            <h2>Edit Expense</h2>
+
+            <form id="editExpenseForm">
+
+                <div class="form-group">
+                    <label for="editExpenseTitle">Expense Title</label>
+
+                    <input
+                        type="text"
+                        id="editExpenseTitle"
+                        placeholder="Enter expense title"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="editExpenseDescription">Description</label>
+
+                    <textarea
+                        id="editExpenseDescription"
+                        placeholder="Enter expense description"
+                        required
+                    ></textarea>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="editExpenseAmount">Amount (Rs.)</label>
+
+                    <input
+                        type="number"
+                        id="editExpenseAmount"
+                        placeholder="Enter expense amount"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+                </div>
+
+
+                <div class="modal-buttons">
+
+                    <button type="submit" class="btn-primary">
+                        Update Expense
+                    </button>
+
+                    <button
+                        type="button"
+                        id="closeEditModal"
+                        class="btn-secondary"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript Files -->
+    <script src="js/dashboard.js"></script>
+    <script src="js/expenses.js"></script>
+    <script src="js/report.js"></script>
+
+</body>
+
+</html>
