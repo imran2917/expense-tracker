@@ -252,7 +252,7 @@ const totalExpensesElement = document.getElementById("totalExpenses");
 const totalTransactionsElement = document.getElementById("totalTransactions");
 const averageExpenseElement = document.getElementById("averageExpense");
 
-
+const result = null;
 // Function to Fetch and Display Expenses
 async function loadExpenses() {
 
@@ -586,3 +586,15 @@ document.getElementById("sortAmount")?.addEventListener("click", function () {
 
     this.textContent = amountAscending ? "Amount ↑" : "Amount ↓";
 });
+
+// Print the Data into PDF file
+
+document.getElementById('generateReport')?.addEventListener("click", function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.text(" This Text is Writteb By Js",100,100);
+    const expense = result.expense.title
+    doc.save("Report.pdf");
+})
+
+console.log(response)
