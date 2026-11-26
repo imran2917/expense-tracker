@@ -1,6 +1,4 @@
 
-console.log("Expenses JavaScript is loaded!");
-
 let selectedExpenseId = null;
 
 // Get Edit Expense Modal
@@ -283,6 +281,13 @@ async function loadExpenses() {
 
         // Get expenses from the response
         const expenses = result.data.expenses;
+
+        // sort expenses from newest to oldest
+        expenses.sort((a,b) =>
+            new Date(b.created_at) - new Date(a.created_at)
+        )
+
+
         const displayedExpenses = totalExpensesElement
             ? expenses.slice(0,5)
             : expenses;
@@ -586,15 +591,76 @@ document.getElementById("sortAmount")?.addEventListener("click", function () {
 
     this.textContent = amountAscending ? "Amount ↑" : "Amount ↓";
 });
+// 
 
-// Print the Data into PDF file
+// document.getElementById("generateReport")?.addEventListener("click", async function (){
+//     const token = localStorage.getItem("access_token");
 
-document.getElementById('generateReport')?.addEventListener("click", function() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.text(" This Text is Writteb By Js",100,100);
-    const expense = result.expense.title
-    doc.save("Report.pdf");
-})
+//     if (!token) {
+//         alert(" Unable to fetch expense for pdf")
+//         return ;
+//     }
 
-console.log(response)
+//     try{
+//         const response = await fetch("http://127.0.0.1:8000/expenses", {
+//             method : "GET",
+//             headers : {
+//                 "Authorization" : `Bearer ${token}`
+//             }
+
+//         });
+//         // if the response in success
+//         if (!response.ok) {
+//             alert ("Unable to fetch the  expenses for PDF")
+//             return 
+//         }
+
+//         const result = await response.json();
+//         const expenses = result.data?.expenses || [];
+
+//         if (expenses.length === 0){
+//             alert("No Expenses available to expoert")
+//             return;
+//         }
+
+//         // make use the js pdf 
+//         const { jsPDF } = window.jspdf;
+//         const doc = new jsPDF();
+
+//         // font size 
+//         doc.setFontSize(16);
+//         doc.text("Expense Report", 14, 18);
+        
+//         const tableRows = expenses.map(function (expense) {
+//             return [
+//                 expense.title,
+//                 expense.description || "-",
+//                 "Rs. "+ Number(expense.amount).toLocaleString(),
+//                 new Date(expense.created_at).toLocaleString()
+//             ];
+//         });
+
+//         const totalAmount = expenses.reduce(function (sum, expense){
+//             return sum + Number(expense.amount);
+//         }, 0);
+
+//         doc.autoTable({
+//             head: [["Title", "Description", "Amount", "Date"]],
+//             body : tableRows,
+//             startY: 25
+//         });
+
+//         const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 40;
+//         doc.setFontSize(12);
+//         doc.text("Total Expenses: Rs. " + totalAmount.toLocaleString(), 14, finalY);
+
+//         doc.save("ExpenseReport.pdf");
+
+
+//     } catch (error){
+//         console.error("PDF Export Error", error);
+//         alert("Unable to generate pdf")
+//     }
+        
+
+// }) 

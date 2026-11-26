@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings - Expense Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Main Dashboard Layout -->
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <h2 class="logo">Expense<span>Tracker</span></h2>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="expenses.html">Expenses</a>
+                <a href="reports.html">Reports</a>
+                <a href="settings.html" class="active">Settings</a>
+            </nav>
+
+            <button id="logoutBtn" class="btn-danger">
+                Logout
+            </button>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+
+            <!-- Settings Header -->
+            <header class="dashboard-header">
+
+                <div>
+                    <h1>Settings</h1>
+                    <p>Manage your account and application preferences.</p>
+                </div>
+
+            </header>
+
+
+            <!-- Settings Layout -->
+            <section class="settings-layout">
+
+                <!-- Settings Navigation -->
+                <aside class="settings-sidebar">
+
+                    <h3>Settings</h3>
+
+                    <nav class="settings-nav">
+
+                        <button class="settings-nav-item active"
+                            data-settings-section="profile">
+                            Account & Profile
+                        </button>
+
+                        <button class="settings-nav-item"
+                            data-settings-section="preferences">
+                            Preferences
+                        </button>
+
+                        <button class="settings-nav-item"
+                            data-settings-section="notifications">
+                            Notifications
+                        </button>
+
+                        <button class="settings-nav-item"
+                            data-settings-section="appearance">
+                            Appearance
+                        </button>
+
+                        <button class="settings-nav-item"
+                            data-settings-section="security">
+                            Security & Privacy
+                        </button>
+
+                        <button class="settings-nav-item"
+                            data-settings-section="data">
+                            Data & Storage
+                        </button>
+
+                        <button class="settings-nav-item"
+                            data-settings-section="application">
+                            Application Settings
+                        </button>
+
+                    </nav>
+
+                </aside>
+
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+
+                    <!-- Account & Profile Section -->
+                    <section class="settings-section"
+                        id="profile">
+
+                        <div class="settings-section-header">
+
+                            <h2>Account & Profile</h2>
+
+                            <p>
+                                Manage your personal information
+                                and account details.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Profile Form -->
+                        <form id="profileForm">
+
+                            <!-- Full Name -->
+                            <div class="form-group">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    name="fullName"
+                                    placeholder="Enter your full name"
+                                >
+
+                            </div>
+
+
+                            <!-- Email -->
+                            <div class="form-group">
+
+                                <label for="email">
+                                    Email Address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter your email address"
+                                >
+
+                            </div>
+
+
+                            <!-- Profile Picture Placeholder -->
+                            <div class="form-group">
+
+                                <label>Profile Picture</label>
+
+                                <p>
+                                    Profile picture management
+                                    can be added later.
+                                </p>
+
+                            </div>
+
+
+                            <!-- Save Button -->
+                            <div class="settings-actions">
+
+                                <button
+                                    type="submit"
+                                    class="btn-primary">
+                                    Save Changes
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

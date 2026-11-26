@@ -24,7 +24,7 @@
                 <a href="expenses.html">Expenses</a>
                 <a href="reports.html" class="active">Reports</a>
 
-                <a href="#">Settings</a>
+                <a href="setting.html">Settings</a>
             </nav>
 
             <button id="logoutBtn" class="btn-danger">
@@ -111,7 +111,7 @@
     <button type="button" id="clearFilters" class="btn-secondary">
         Clear Filters
     </button>
-    <button type="button" id="generateReport" id ="btn-secondary"> Generate Report</button>
+    <button type="button" id="generateReport" class="btn-secondary"> Generate Report</button>
 
 </div>
 <!-- <button type="button" id="generateReport", class = "btn-secondary">Generate Report</button> -->
@@ -292,9 +292,11 @@
 
 
     <!-- JavaScript Files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/expenses.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/reports.js"></script>
 
 
 </body>
